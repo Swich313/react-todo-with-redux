@@ -1,14 +1,15 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {useHttp} from "../../hooks/http.hook";
 
 
 const initialState = {
     todos: [],
-    todosLoadingStatus: 'idle'
+    todosLoadingStatus: 'idle',
+    completedTodos: []
 }
 
 export const fetchTodos = createAsyncThunk(
-    'todos/FetchTodos',
+    'todos/fetchTodos',
     async () => {
         const {request} = useHttp();
         return await request('http://localhost:3001/todos');
@@ -24,9 +25,10 @@ const todosSlice = createSlice({
         },
         todoDeleted: (state, action) => {
             state.todos = state.todos.filter(item => item.id !== action.payload);
+            state.completedTodos = state.todos.filter(item => item.id === action.payload);
         },
         todoToggleCompleted: (state, action) => {
-            state.todos[action.payload].completed = !state.todos[action.payload].completed;
+            state.todos.find(item => item.id === action.payload).completed = !state.todos.find(item => item.id === action.payload).completed;
         }
     },
     extraReducers: (builder) => {
@@ -45,10 +47,10 @@ const {actions, reducer} = todosSlice;
 
 export default reducer;
 export const {
-    todoCreated,
-    todoDeleted,
-    todoToggleCompleted,
     todosFetching,
     todosFetched,
-    todosFetchingError
+    todosFetchingError,
+    todoCreated,
+    todoDeleted,
+    todoToggleCompleted
 } = actions;

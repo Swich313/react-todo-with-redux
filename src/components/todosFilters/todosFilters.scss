@@ -1,5 +1,5 @@
-@use '../heroesListItem/todosListItem';
-@use '../heroesAddForm/todosAddForm';
+@use '../todosListItem/todosListItem';
+@use '../todosAddForm/todosAddForm';
 
 .container {
   border: 1px solid #dee2e6;
@@ -18,17 +18,36 @@
         background: linear-gradient(90deg, #efd5ff 0%, #515ada 100%);
       }
       .button {
-        font-size: 16px;
-        border: 1px solid #dee2e6;
+        font-size: 14px;
+        //border: 1px solid #dee2e6;
+        border-radius: 0.25em;
         padding: 6px 12px;
         font-weight: bold;
         margin-bottom: 0.5em;
         &:hover {
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
+
       }
       .active_filter{
-        border: 4px solid rgb(33 37 41 / 50%);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      .btn-data-count{
+        position: relative;
+        &::before {
+          content: attr(data-count);
+          position: absolute;
+          top: -0.75em;
+          right: -0.75em;
+          width: 1.5em;
+          height: 1.5em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          background-color: red;
+          color: white;
+        }
       }
     }
   }

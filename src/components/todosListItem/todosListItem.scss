@@ -28,7 +28,6 @@
           -moz-user-select: none;
           -ms-user-select: none;
           max-width: 75%;
-
           &:last-child {
             margin-bottom: 0;
           }
@@ -97,6 +96,33 @@
     position: relative;
     left: 530px;
     bottom: 96px;
+    &__tooltip {
+      visibility: hidden;
+      font-size: 14px;
+      width: 160px;
+      background-color: #fff;
+      border: 1px solid #343a3f;
+      text-align: center;
+      border-radius: 4px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 150%;
+      left: 50%;
+      margin-left: -80px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19);
+      &:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black  transparent transparent transparent;
+
+      }
+    }
   }
   .close_btn:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.19);
@@ -122,8 +148,20 @@
   &__default {
     background: linear-gradient(90deg, #fcff9e 0%, #c67700 100%);
   }
+
+  &__done {
+    background-color: #ff2424;
+  }
 }
 
+.crossed {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.visible{
+  visibility: visible;
+}
 
 
 
