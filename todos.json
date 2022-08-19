@@ -27,6 +27,97 @@
       "description": "asd",
       "type": "work",
       "completed": false
+    },
+    {
+      "id": "8593eb77-dcad-4911-9e1d-080576815a00",
+      "title": "asd",
+      "description": "asd",
+      "type": "home",
+      "completed": false
+    },
+    {
+      "id": "d84ea684-505c-4252-8f14-540183e0a376",
+      "title": "asd",
+      "description": "qwe",
+      "type": "",
+      "completed": false
+    },
+    {
+      "id": "102db201-4951-4371-ba2f-43ebc0333548",
+      "title": "qwe",
+      "description": "qwe",
+      "type": "",
+      "completed": false
+    },
+    {
+      "id": "724ce572-d14f-4ce5-9f6b-f28a2b9a6cd7",
+      "title": "qwe",
+      "description": "qwe",
+      "type": "",
+      "completed": false
+    },
+    {
+      "id": "966eda04-1219-4338-b1d0-9aac0a9d0dfa",
+      "title": "asd",
+      "description": "qwe",
+      "type": "",
+      "completed": false
+    },
+    {
+      "id": "146efd5f-279c-408f-944e-46f62d030d46",
+      "title": "Пальцун",
+      "description": "sdf",
+      "type": "work",
+      "completed": false
+    },
+    {
+      "id": "f169b22c-4696-4e6e-b06a-6d8ccae1a0d2",
+      "title": "sdf",
+      "description": "sdf",
+      "type": "hobby",
+      "completed": false
+    },
+    {
+      "id": "9e3d29f5-e3cf-4e63-b022-94aa280de352",
+      "title": "sdf",
+      "description": "sdf",
+      "type": "hobby",
+      "completed": false
+    },
+    {
+      "id": "8a57d27c-6307-4836-9d71-b54ebcfb234f",
+      "title": "wer",
+      "description": "wer",
+      "type": "other",
+      "completed": false
+    },
+    {
+      "id": "e8e78311-9c8c-4cb5-982d-75127d88ea42",
+      "title": "sdf",
+      "description": "sdf",
+      "type": "work",
+      "completed": false
+    },
+    {
+      "id": "497a00b1-d1a1-478b-91cf-6aced9113d06",
+      "title": "asd",
+      "description": "wer",
+      "type": "home",
+      "completed": false
+    },
+    {
+      "id": "2d461032-833d-401d-badd-ab0ff6f18ef8",
+      "title": "wer",
+      "description": "wer",
+      "type": "work",
+      "completed": false
+    },
+    {
+      "id": "5772668a-abe1-49cc-9dfe-d83ade04af77",
+      "title": "sdv",
+      "description": "sdf",
+      "type": "work",
+      "completed": false
     }
   ],
   "filters": [

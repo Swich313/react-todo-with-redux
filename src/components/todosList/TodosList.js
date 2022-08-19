@@ -2,11 +2,12 @@ import {useHttp} from '../../hooks/http.hook';
 import {useCallback, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { todoDeleted, todoToggleCompleted, fetchTodos} from './todosSlice';
+import { todoDeleted, todoToggleCompleted, fetchTodos, setCurrentPage} from './todosSlice';
 import {createSelector} from "@reduxjs/toolkit";
 
 import TodosListItem from "../todosListItem/TodosListItem";
 import Spinner from '../spinner/Spinner';
+import './todoList.scss'
 
 
 const TodosList = () => {                       //нужно прокинуть props.updateData
@@ -25,11 +26,16 @@ const TodosList = () => {                       //нужно прокинуть 
 
     const filteredTodos = useSelector(filteredTodosSelector);
     // updateData(filteredTodos);
-    const {todos, todosLoadingStatus} = useSelector(state => state);
+    const {todos, todosLoadingStatus, currentPage,  perPage} = useSelector(state => state.todos);
     const {activeFilter} = useSelector(state => state.filters)
     const dispatch = useDispatch();
     const {request} = useHttp();
     const style = {textAlign: 'center', marginTop: '5px'};
+    const pagesQuantity = Math.ceil(filteredTodos.length / perPage);
+    const pages = [];
+    for (let i = 1; i<=pagesQuantity; i++){
+        pages.push(i)
+    }
 
     useEffect(() => {
         dispatch(fetchTodos());
@@ -43,6 +49,7 @@ const TodosList = () => {                       //нужно прокинуть 
                 .catch(err => console.log(err))
     }, [request]);
 
+
     const onCompleteTodo = (id) => {
         dispatch(todoToggleCompleted(id));
     };
@@ -54,14 +61,16 @@ const TodosList = () => {                       //нужно прокинуть 
         return <h5 style={style}>Downloading Error</h5>
     }
 
-    const renderTodosList = (arr, filter) => {
+    const renderTodosList = (arr, filter, currentPage, perPage) => {
         if (arr.length === 0 && filter !== 'done') {
             return <h5 style={style}>There is no todo yet!</h5>
         } else if (arr.length === 0){
             return <h5 style={style}>There is no completed todo yet!</h5>
         }
-
-        return arr.map(({id, ...props}) => {
+        let start = (currentPage - 1) * perPage;
+        let stop = currentPage * perPage;
+        const shortenArr = arr.slice(start, stop);
+        return shortenArr.map(({id, ...props}) => {
             return (
                 <TodosListItem
                     key={id}
@@ -73,10 +82,21 @@ const TodosList = () => {                       //нужно прокинуть 
         })
     }
 
-    const elements = renderTodosList(filteredTodos, activeFilter);
+    const elements = renderTodosList(filteredTodos, activeFilter, currentPage, perPage);
     return (
         <ul>
             {elements}
+            <div className="pages">
+                {pages.map((page, i) => {
+                    return (
+                        <span key={i}
+                              className={currentPage === page && pages.length > 1 ? "page active_page" : pages.length > 1 ? "page" : "invisible"}
+                              onClick={() => {dispatch(setCurrentPage(page))}}>
+                            {page}
+                        </span>
+                    )
+                })}
+            </div>
         </ul>
     )
 }

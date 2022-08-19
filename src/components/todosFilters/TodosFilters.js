@@ -50,7 +50,6 @@ const TodosFilters = () => {                                //нужно про�
                 'active_filter' : name === activeFilter,
                 'btn-data-count' : name === activeFilter
             });
-            console.log(activeFilter)
             return <button
                         key={id}
                         className={btnClass}

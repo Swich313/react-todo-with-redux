@@ -1,7 +1,7 @@
 .app {
     height: 100vh;
     overflow-y: scroll;
-    //background: url('../../assets/hero_bg.jpg') center / cover no-repeat;
+    background: url('../../assets/crumpledPaper.jpg') center / cover no-repeat;
 }
 
 .content {
@@ -12,5 +12,28 @@
     padding-top: 50px;
     &__interactive {
         padding-left: 40px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .content {
+        grid-template-columns: 400px 340px;
+        max-width: 740px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .content {
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .content {
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .content {
     }
 }

@@ -44,7 +44,9 @@ const TodosAddForm = () => {
         if (filters && filters.length > 0) {
             return filters.map(({id, name}) => {
                 if (name === 'all') return;
-                return <option key={id} value={id}>{name}</option>
+                return (
+                    <option key={id} value={id}>{name}</option>
+                )
             })
         }
     }

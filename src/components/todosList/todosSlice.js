@@ -5,8 +5,12 @@ import {useHttp} from "../../hooks/http.hook";
 const initialState = {
     todos: [],
     todosLoadingStatus: 'idle',
-    completedTodos: []
+    completedTodos: [],
+    currentPage: 1,
+    perPage: 7,
+    totalQuantityTodos: 0
 }
+// const _baseOffset = 0;
 
 export const fetchTodos = createAsyncThunk(
     'todos/fetchTodos',
@@ -15,6 +19,14 @@ export const fetchTodos = createAsyncThunk(
         return await request('http://localhost:3001/todos');
     }
 );
+
+// export const fetchTodos = createAsyncThunk(
+//     'todos/fetchTodos',
+//     async ({offset = _baseOffset, quantityToLoad}) => {
+//         const {request} = useHttp();
+//         // return await request(`http://localhost:3001/todos?_start=${offset}&_limit=${quantityToLoad}`);
+//     }
+// );
 
 const todosSlice = createSlice({
     name: 'todos',
@@ -29,6 +41,9 @@ const todosSlice = createSlice({
         },
         todoToggleCompleted: (state, action) => {
             state.todos.find(item => item.id === action.payload).completed = !state.todos.find(item => item.id === action.payload).completed;
+        },
+        setCurrentPage: (state, action) => {
+            state.currentPage = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -37,6 +52,7 @@ const todosSlice = createSlice({
             .addCase(fetchTodos.fulfilled, (state, action) => {
                 state.todosLoadingStatus = 'idle';
                 state.todos = action.payload;
+                state.totalQuantityTodos = state.todos.length;
             })
             .addCase(fetchTodos.rejected, state => {state.todosLoadingStatus = 'error'})
             .addDefaultCase(() => {})
@@ -52,5 +68,6 @@ export const {
     todosFetchingError,
     todoCreated,
     todoDeleted,
-    todoToggleCompleted
+    todoToggleCompleted,
+    setCurrentPage
 } = actions;
