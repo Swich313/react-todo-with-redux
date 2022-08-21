@@ -43,20 +43,6 @@
       "completed": false
     },
     {
-      "id": "724ce572-d14f-4ce5-9f6b-f28a2b9a6cd7",
-      "title": "qwe",
-      "description": "qwe",
-      "type": "",
-      "completed": false
-    },
-    {
-      "id": "966eda04-1219-4338-b1d0-9aac0a9d0dfa",
-      "title": "asd",
-      "description": "qwe",
-      "type": "",
-      "completed": false
-    },
-    {
       "id": "146efd5f-279c-408f-944e-46f62d030d46",
       "title": "Пальцун",
       "description": "sdf",
@@ -75,6 +61,20 @@
       "title": "wef",
       "description": "wef",
       "type": "",
+      "completed": false
+    },
+    {
+      "id": "0cd8656f-a209-4ffa-a804-7afb4e711534",
+      "title": "Андрей",
+      "description": "dfgdfg",
+      "type": "work",
+      "completed": false
+    },
+    {
+      "id": "a57a4877-4209-44b4-bc18-665b0a7b609d",
+      "title": "456",
+      "description": "123",
+      "type": "other",
       "completed": false
     }
   ],

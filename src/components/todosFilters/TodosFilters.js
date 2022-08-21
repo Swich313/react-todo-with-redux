@@ -4,7 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {createSelector} from "@reduxjs/toolkit";
 import classNames from "classnames";
 
-import {fetchFilters, filtersChanged} from "./filtersSlice";
+import {fetchFilters, filtersChanged} from "./filtersSlice"
+import {setCurrentPage} from "../todosList/todosSlice";
 import Spinner from "../spinner/Spinner";
 
 import './todosFilters.scss'
@@ -54,7 +55,10 @@ const TodosFilters = () => {                                //нужно про�
                         key={id}
                         className={btnClass}
                         data-count={filteredTodos.length}
-                        onClick={() => dispatch(filtersChanged(id))}>{name}</button>
+                        onClick={() => {
+                            dispatch(setCurrentPage(1));
+                            dispatch(filtersChanged(id));
+                        }}>{name}</button>
         })
     }
 

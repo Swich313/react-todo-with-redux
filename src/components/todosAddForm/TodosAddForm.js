@@ -21,7 +21,7 @@ const TodosAddForm = () => {
             id: uuidv4(),
             title: todoTitle,
             description: todoDescr,
-            type: todoType,
+            type: todoType ? todoType : "other",
             completed: false
         }
 
