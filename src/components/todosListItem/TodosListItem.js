@@ -1,9 +1,9 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import './todosListItem.scss';
 
 const TodosListItem = (props) => {
-    const {title, description, type, id, completed, onDeleteTodo, onCompleteTodo} = props;
+    const {title, description, type, id, completed, archived, onDeleteTodo, onArchiveTodo, onCompleteTodo} = props;
     let typeClassName;
     const [visibility, setVisibility] = useState(null);
 
@@ -34,12 +34,26 @@ const TodosListItem = (props) => {
             <div className={`todo_item__text ${completed?'crossed':null}`}>
                 {description}
             </div>
-            <button type="button" className="close_btn" aria-label="Close" onClick={(e) =>{
-                if(completed){
+            <button type="button" className="close_btn" aria-label="Close" onClick={() =>{
+                if(completed && !archived){
+                    onArchiveTodo();
+                } else if(completed && archived){
                     onDeleteTodo();
                 }
                 setVisibility('visible');
-                setTimeout(()=> {setVisibility(null);}, 5000);
+                const timer = setTimeout(()=> {
+                    setVisibility(null);}, 5000);
+                clearTimeout(timer);
+                // useEffect(()=> {
+                //     setVisibility('visible');
+                //     const timer = setTimeout(()=> {
+                //         setVisibility(null);}, 5000);
+                //     return () => {
+                //         clearTimeout(timer);
+                //     }
+                // }, [])
+
+
             }}>x
                 <span className={`close_btn__tooltip ${visibility}`}>Complete this todo first</span>
             </button>

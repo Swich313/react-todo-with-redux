@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHttp} from "../../hooks/http.hook";
 import {v4 as uuidv4} from 'uuid';
 import {todoCreated} from "../todosList/todosSlice";
+import 'dotenv/config';
 
 import "./todosAddForm.scss"
 
@@ -22,10 +23,11 @@ const TodosAddForm = () => {
             title: todoTitle,
             description: todoDescr,
             type: todoType ? todoType : "other",
-            completed: false
+            completed: false,
+            archived: false
         }
 
-        request("http://localhost:3001/todos", "POST", JSON.stringify(newTodo))
+        request(`${process.env.REACT_APP_REQUEST_URL}todos`, "POST", JSON.stringify(newTodo))
             .then(res => console.log(res, 'successful posting'))
             .then(dispatch(todoCreated(newTodo)))
             .catch(err => console.log(err));
@@ -43,7 +45,7 @@ const TodosAddForm = () => {
         }
         if (filters && filters.length > 0) {
             return filters.map(({id, name}) => {
-                if (name === 'all') return;
+                if (name === 'all' || name === 'done') return;
                 return (
                     <option key={id} value={id}>{name}</option>
                 )
