@@ -1,23 +1,31 @@
 import {useHttp} from '../../hooks/http.hook';
-import {useCallback, useEffect} from 'react';
+import {useCallback, useEffect, useContext, createContext} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import 'dotenv/config';
 
-import { todoDeleted, todoToggleCompleted, fetchTodos, setCurrentPage} from './todosSlice';
+import { todoDeleted,
+        todoArchived,
+        todoToggleCompleted,
+        fetchTodos,
+        setCurrentPage,
+        setFilteredTodosQuantity} from './todosSlice';
 import {createSelector} from "@reduxjs/toolkit";
 
 import TodosListItem from "../todosListItem/TodosListItem";
 import Spinner from '../spinner/Spinner';
 import './todoList.scss'
+import data from "bootstrap/js/src/dom/data";
 
 
 const TodosList = () => {                       //нужно прокинуть props.updateData
-
     const filteredTodosSelector = createSelector(
         (state) => state.filters.activeFilter,
         (state) => state.todos.todos,
         (filter, todos) => {
             if (filter === 'all') {
-                return todos;
+                return todos.filter(item => item.type !== 'done');
+            } else if (filter === 'done'){
+                return todos.filter(item => item.type === filter);
             } else {
                 return todos.filter(item => item.type === filter);
             }
@@ -25,8 +33,7 @@ const TodosList = () => {                       //нужно прокинуть 
     );
 
     const filteredTodos = useSelector(filteredTodosSelector);
-    // updateData(filteredTodos);
-    const {todos, todosLoadingStatus, currentPage,  perPage} = useSelector(state => state.todos);
+    const {todosLoadingStatus, currentPage,  perPage, todos} = useSelector(state => state.todos);
     const {activeFilter} = useSelector(state => state.filters)
     const dispatch = useDispatch();
     const {request} = useHttp();
@@ -35,23 +42,38 @@ const TodosList = () => {                       //нужно прокинуть 
     const pages = [];
     for (let i = 1; i<=pagesQuantity; i++){
         pages.push(i)
-    }
+    };
+
+    useEffect(()=> {
+        dispatch(setFilteredTodosQuantity(filteredTodos));
+    }, [filteredTodos]);
 
     useEffect(() => {
         dispatch(fetchTodos());
         // eslint-disable-next-line
     }, []);
 
-    const onDeleteTodo = useCallback((id, todos) => {
-        request(`http://localhost:3001/todos/${id}`, "DELETE")
+    const onDeleteTodo = useCallback((id) => {
+                request(`${process.env.REACT_APP_REQUEST_URL}todos/${id}`, "DELETE")
                 .then(data => console.log(data, 'Deleted'))
                 .then(dispatch(todoDeleted(id)))
                 .catch(err => console.log(err))
     }, [request]);
 
+    const onArchiveTodo = useCallback((id) => {
+        request(`${process.env.REACT_APP_REQUEST_URL}todos/${id}`, "PATCH", JSON.stringify({archived: true, completed: true}))
+            .then(data => console.log(data, 'Patched'))
+            .then(dispatch(todoArchived(id)))
+            .catch(err => console.log(err))
+    }, [dispatch]);
 
-    const onCompleteTodo = (id) => {
-        dispatch(todoToggleCompleted(id));
+
+    const onCompleteTodo = (id, todos) => {
+        let iscompleted  = !todos.find(item => item.id === id).completed;
+        request(`${process.env.REACT_APP_REQUEST_URL}todos/${id}`, "PATCH", JSON.stringify({completed: iscompleted}))
+            .then(data => console.log(data, 'Patched'))
+            .then(dispatch(todoToggleCompleted(id)))
+            .catch(err => console.log(err));
     };
 
 
@@ -77,7 +99,8 @@ const TodosList = () => {                       //нужно прокинуть 
                     {...props}
                     id={id}
                     onDeleteTodo={() => onDeleteTodo(id, todos)}
-                    onCompleteTodo={() => onCompleteTodo(id)}/>
+                    onCompleteTodo={() => onCompleteTodo(id, todos)}
+                    onArchiveTodo ={() => onArchiveTodo(id)}/>
             )
         })
     }
@@ -100,5 +123,4 @@ const TodosList = () => {                       //нужно прокинуть 
         </ul>
     )
 }
-
 export default TodosList;

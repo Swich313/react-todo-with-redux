@@ -7,11 +7,11 @@ import {useState} from "react";
 
 const App = () => {
 
-    // const [filteredTodos, setFilteredTodos] = useState(null);
-    //
-    // const updateData = (value) => {
-    //     setFilteredTodos(value);
-    // }
+     // const [filteredTodos, setFilteredTodos] = useState(null);
+     //
+     // const updateData = (value) => {
+     //     setFilteredTodos(value);
+     // }
 
     return (
         <main className="app">
