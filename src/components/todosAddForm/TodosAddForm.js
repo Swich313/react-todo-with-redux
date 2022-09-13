@@ -2,7 +2,7 @@ import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHttp} from "../../hooks/http.hook";
 import {v4 as uuidv4} from 'uuid';
-import {todoCreated} from "../todosList/todosSlice";
+import {todoCreated, setTodoDeadline} from "../todosList/todosSlice";
 import 'dotenv/config';
 
 import "./todosAddForm.scss"
@@ -13,19 +13,22 @@ const TodosAddForm = () => {
     const [todoType, setTodoType] = useState('');
 
     const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
+    const {todoDeadline} = useSelector(state => state.todos);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        const newTodo = {
+        const newTodo ={
             id: uuidv4(),
             title: todoTitle,
             description: todoDescr,
+            deadline: todoDeadline,
             type: todoType ? todoType : "other",
             completed: false,
             archived: false
-        };
+        }
+
 
         request(`${process.env.REACT_APP_REQUEST_URL}todos`, "POST", JSON.stringify(newTodo))
             .then(res => console.log(res, 'successful posting'))
@@ -35,7 +38,8 @@ const TodosAddForm = () => {
         setTodoTitle('');
         setTodoDescr('');
         setTodoType('');
-    };
+        dispatch(setTodoDeadline(null));
+    }
 
     const renderFilters = (filters, status) => {
         if (status === 'loading'){

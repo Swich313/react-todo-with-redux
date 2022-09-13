@@ -1,9 +1,9 @@
 import TodosList from '../todosList/TodosList';
 import TodosAddForm from '../todosAddForm/TodosAddForm';
 import TodosFilters from '../todosFilters/TodosFilters';
+import TodoCalendar from "../todoCalendar/TodoCalendar";
 
 import './app.scss';
-import {useState} from "react";
 
 const App = () => {
 
@@ -12,6 +12,8 @@ const App = () => {
      // const updateData = (value) => {
      //     setFilteredTodos(value);
      // }
+
+
 
     return (
         <main className="app">
@@ -22,6 +24,7 @@ const App = () => {
                     <TodosAddForm/>
                     {/*<TodosFilters filteredTodos={filteredTodos}/>*/}
                     <TodosFilters />
+                    <TodoCalendar />
                 </div>
             </div>
         </main>

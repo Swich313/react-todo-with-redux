@@ -13,7 +13,9 @@ const stringMiddleware = () => (next) => (action) => {
 
 const store = configureStore({
     reducer: {todos, filters},
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(stringMiddleware),
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+        serializableCheck: false
+    }).concat(stringMiddleware),
     devTools: process.env.NODE_ENV !== 'production',
 });
 

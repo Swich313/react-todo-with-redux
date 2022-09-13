@@ -5,12 +5,12 @@ import 'dotenv/config';
 const initialState = {
     todos: [],
     todosLoadingStatus: 'idle',
-    // completedTodos: [],
     filteredTodosQuantity: 0,
     currentPage: 1,
     perPage: 7,
-    totalQuantityTodos: 0
+    todoDeadline: ""
 }
+// const _baseOffset = 0;
 
 export const fetchTodos = createAsyncThunk(
     'todos/fetchTodos',
@@ -35,19 +35,15 @@ const todosSlice = createSlice({
         todoCreated: (state, action) => {
             state.todos.push(action.payload);
         },
-        todoArchived: (state, action) => {
-            const selectedTodoById = state.todos.find(item => item.id === action.payload);
-            selectedTodoById.archived = true;
-            selectedTodoById.type = "done";
-        },
         todoDeleted: (state, action) => {
-            state.todos = state.todos.filter(item => item.id !== action.payload)
-
-            // state.completedTodos.push(selectedTodoById);
-            // state.todos = state.todos.filter(item => item.id !== action.payload)
-
-            // selectedTodoById.archived ? state.todos = state.todos.filter(item => item.id !== action.payload) : selectedTodoById.type = "done";
-
+            // state.completedTodos.push(state.todos.filter(item => item.id === action.payload));
+            // state.completedTodos.find(item => item.id === action.payload).type = "done";
+            state.todos = state.todos.filter(item => item.id !== action.payload);
+        },
+        todoArchived: (state, action) => {
+            const selecterTodoById = state.todos.find(item => item.id === action.payload);
+            selecterTodoById.type = "done";
+            selecterTodoById.archived = true;
         },
         todoToggleCompleted: (state, action) => {
             state.todos.find(item => item.id === action.payload).completed = !state.todos.find(item => item.id === action.payload).completed;
@@ -56,8 +52,12 @@ const todosSlice = createSlice({
             state.currentPage = action.payload;
         },
          setFilteredTodosQuantity: (state, action) => {
-            state.filteredTodosQuantity = action.payload.length;
-         }
+            state.filteredTodosQuantity = action.payload;
+         },
+        setTodoDeadline: (state, action) => {
+            state.todoDeadline = action.payload;
+        }
+
     },
     extraReducers: (builder) => {
         builder
@@ -65,7 +65,7 @@ const todosSlice = createSlice({
             .addCase(fetchTodos.fulfilled, (state, action) => {
                 state.todosLoadingStatus = 'idle';
                 state.todos = action.payload;
-                state.totalQuantityTodos = state.todos.length;
+                // state.totalQuantityTodos = state.todos.length;
             })
             .addCase(fetchTodos.rejected, state => {state.todosLoadingStatus = 'error'})
             .addDefaultCase(() => {})
@@ -84,5 +84,6 @@ export const {
     todoArchived,
     todoToggleCompleted,
     setCurrentPage,
-    setFilteredTodosQuantity
+    setFilteredTodosQuantity,
+    setTodoDeadline
 } = actions;
