@@ -1,4 +1,3 @@
-import {useHttp} from "../../hooks/http.hook";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
@@ -15,15 +14,13 @@ const TodosFilters = () => {                                //нужно про�
     const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
     const {filteredTodosQuantity} = useSelector(state => state.todos);
     const dispatch = useDispatch();
-    const {request} = useHttp();
     const style = {textAlign: 'center', marginTop: '5px'};
-
     useEffect(() => {
         dispatch(fetchFilters())
     }, [])
 
     if (filtersLoadingStatus === 'loading') {
-        return <Spinner />
+        return <Spinner />;
     } else if(filtersLoadingStatus === 'error') {
         return <h5 style={style}>Downloading Error</h5>
     }

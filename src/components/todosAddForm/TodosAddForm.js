@@ -1,7 +1,6 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHttp} from "../../hooks/http.hook";
-import {v4 as uuidv4} from 'uuid';
 import {todoCreated, setTodoDeadline} from "../todosList/todosSlice";
 import 'dotenv/config';
 
@@ -20,7 +19,6 @@ const TodosAddForm = () => {
     const onSubmitHandler = (e) => {
         e.preventDefault();
         const newTodo ={
-            id: uuidv4(),
             title: todoTitle,
             description: todoDescr,
             deadline: todoDeadline,
@@ -31,8 +29,11 @@ const TodosAddForm = () => {
 
 
         request(`${process.env.REACT_APP_REQUEST_URL}todos`, "POST", JSON.stringify(newTodo))
-            .then(res => console.log(res, 'successful posting'))
-            .then(dispatch(todoCreated(newTodo)))
+            .then(res => {
+                const newTodoWithId = {...newTodo, _id: res._id};
+                console.log(res, 'successful posting')
+                dispatch(todoCreated(newTodoWithId))
+            })
             .catch(err => console.log(err));
 
         setTodoTitle('');

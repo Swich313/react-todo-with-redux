@@ -40,19 +40,23 @@ const TodosList = () => {                       //нужно прокинуть 
     const pages = [];
     for (let i = 1; i<=pagesQuantity; i++){
         pages.push(i)
-    };
+    }
+    // console.log({currentPage, filteredTodosQuantity})
 
     useEffect(() => {
         dispatch(setFilteredTodosQuantity(filteredTodosQuantity));
-        if (currentPage === pagesQuantity || ((filteredTodosQuantity/perPage) - pagesQuantity) === 0) {
+        if ((currentPage === pagesQuantity || ((filteredTodosQuantity/perPage)) - pagesQuantity) === 0 && filteredTodosQuantity !== 0) {
             dispatch(setCurrentPage(Math.ceil(filteredTodosQuantity / perPage)))
         }
     }, [filteredTodosQuantity]);
 
-    useEffect(() => {
-        dispatch(fetchTodos());
+     useEffect(() => {
+         dispatch(fetchTodos())
+             .then(res => setFilteredTodosQuantity(res.payload.length));
         // eslint-disable-next-line
     }, []);
+
+
 
     const onDeleteTodo = useCallback((id, todos) => {
 
@@ -75,7 +79,7 @@ const TodosList = () => {                       //нужно прокинуть 
     }, [request]);
 
     const onCompleteTodo = useCallback((id, todos) => {
-        const selectedTodo = todos.find(item => item.id === id);
+        const selectedTodo = todos.find(item => item._id === id);
         const completed = {"completed": !selectedTodo.completed};
         request(`${process.env.REACT_APP_REQUEST_URL}todos/${id}`,
             "PATCH",
@@ -101,15 +105,15 @@ const TodosList = () => {                       //нужно прокинуть 
         let start = (currentPage - 1) * perPage;
         let stop = currentPage * perPage;
         const shortenArr = arr.slice(start, stop);
-        return shortenArr.map(({id, ...props}) => {
+        return shortenArr.map(({_id, ...props}) => {
             return (
                 <TodosListItem
-                    key={id}
+                    key={_id}
                     {...props}
-                    id={id}
-                    onArchiveTodo={() => onArchiveTodo(id)}
-                    onDeleteTodo={() => onDeleteTodo(id, filteredTodos)}
-                    onCompleteTodo={() => onCompleteTodo(id, todos)}/>
+                    id={_id}
+                    onArchiveTodo={() => onArchiveTodo(_id)}
+                    onDeleteTodo={() => onDeleteTodo(_id, filteredTodos)}
+                    onCompleteTodo={() => onCompleteTodo(_id, todos)}/>
             )
         })
     }

@@ -38,15 +38,15 @@ const todosSlice = createSlice({
         todoDeleted: (state, action) => {
             // state.completedTodos.push(state.todos.filter(item => item.id === action.payload));
             // state.completedTodos.find(item => item.id === action.payload).type = "done";
-            state.todos = state.todos.filter(item => item.id !== action.payload);
+            state.todos = state.todos.filter(item => item._id !== action.payload);
         },
         todoArchived: (state, action) => {
-            const selecterTodoById = state.todos.find(item => item.id === action.payload);
+            const selecterTodoById = state.todos.find(item => item._id === action.payload);
             selecterTodoById.type = "done";
             selecterTodoById.archived = true;
         },
         todoToggleCompleted: (state, action) => {
-            state.todos.find(item => item.id === action.payload).completed = !state.todos.find(item => item.id === action.payload).completed;
+            state.todos.find(item => item._id === action.payload).completed = !state.todos.find(item => item._id === action.payload).completed;
         },
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload;
