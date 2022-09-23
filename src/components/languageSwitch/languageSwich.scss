@@ -1,0 +1,50 @@
+
+.switch_lang{
+  width: 150px;
+  text-align: left;
+  cursor: pointer;
+  z-index: 50;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  &:hover{
+    .lang_dropdown {
+      display: block;
+    }
+  }
+}
+
+.current_lang {
+  //background-color:  #dee2e6;
+  padding: 3px 5px 0 5px;
+  border-radius: 5px;
+}
+
+.lang_flag {
+  width: 20px;
+  display: inline-block;
+}
+
+.lang_text{
+  font-size: 16px;
+  display: inline-block;
+  margin: 2px 0 2px 5px;
+  vertical-align: top;
+}
+
+.lang_dropdown {
+  display: none;
+  background-color: #dee2e6;
+  margin-top: 2px;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18);
+}
+
+.selecting_lang {
+  padding: 5px 5px 5px 5px;
+  cursor: pointer;
+  &:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+}

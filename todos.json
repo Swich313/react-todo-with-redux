@@ -1,35 +1,35 @@
 {
   "todos": [
     {
-      "id": 3,
+      "_id": 3,
       "title": "new song",
       "description": "to learn another Beatles song",
       "type": "hobby",
       "completed": false
     },
     {
-      "id": "18028867-8824-4325-9dc6-78f3ff47abdd",
+      "_id": "18028867-8824-4325-9dc6-78f3ff47abdd",
       "title": "training",
       "description": "beat a record",
       "type": "other",
       "completed": false
     },
     {
-      "id": "4a474638-33d5-4510-97b2-e1e9673f956c",
+      "_id": "4a474638-33d5-4510-97b2-e1e9673f956c",
       "title": "project",
       "description": "FINISH my project",
       "type": "work",
       "completed": false
     },
     {
-      "id": "d4f21632-d3b9-4e86-ba1e-416958c08e78",
+      "_id": "d4f21632-d3b9-4e86-ba1e-416958c08e78",
       "title": "204ЮК01УК",
       "description": "asd",
       "type": "work",
       "completed": false
     },
     {
-      "id": "8593eb77-dcad-4911-9e1d-080576815a00",
+      "_id": "8593eb77-dcad-4911-9e1d-080576815a00",
       "title": "asd",
       "description": "asd",
       "type": "done",
