@@ -2,6 +2,7 @@ import {useState} from "react";
 import {handleDate} from "../todoCalendar/TodoCalendar";
 
 import './todosListItem.scss';
+import {useTranslation} from "react-i18next";
 
 const TodosListItem = (props) => {
     const {
@@ -19,6 +20,7 @@ const TodosListItem = (props) => {
     let typeClassName;
     const [visibility, setVisibility] = useState(null);
     const currentDateString = handleDate(new Date());
+    const {t} = useTranslation();
 
 
     switch (type) {
@@ -50,8 +52,7 @@ const TodosListItem = (props) => {
                         {description}
                         <p className={
                             deadline ? null : 'time_hide'
-                        }> Complete up
-                            to: {Date.parse(deadline) > Date.parse(new Date()) ? `${deadline}` : deadline === currentDateString ? `${deadline} (it's today)`: `${deadline} (outdated)`}</p>
+                        }> {t('deadline_text')} {Date.parse(deadline) > Date.parse(new Date()) ? `${deadline}` : deadline === currentDateString ? `${deadline} ${t('deadline_today')}`: `${deadline} ${t('deadline_outdated')}`}</p>
                     </div>
                     <button type="button" className="close_btn" aria-label="Close" onClick={() => {
                         if (completed && !archived) {
@@ -68,7 +69,7 @@ const TodosListItem = (props) => {
                             setVisibility(null)
                         }, 5000);
                     }}>x
-                        <span className={`close_btn__tooltip ${visibility}`}>Complete this todo first</span>
+                        <span className={`close_btn__tooltip ${visibility}`}>{t('tooltip')}</span>
                     </button>
                 </li>
             )

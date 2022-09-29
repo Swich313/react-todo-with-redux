@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import classNames from "classnames";
-
+import {useTranslation} from "react-i18next";
 import {fetchFilters, filtersChanged} from "./filtersSlice"
 import {setCurrentPage} from "../todosList/todosSlice";
 import Spinner from "../spinner/Spinner";
@@ -14,6 +14,7 @@ const TodosFilters = () => {                                //нужно про�
     const {filters, filtersLoadingStatus, activeFilter} = useSelector(state => state.filters);
     const {filteredTodosQuantity} = useSelector(state => state.todos);
     const dispatch = useDispatch();
+    const {t} = useTranslation();
     const style = {textAlign: 'center', marginTop: '5px'};
     useEffect(() => {
         dispatch(fetchFilters())
@@ -22,12 +23,12 @@ const TodosFilters = () => {                                //нужно про�
     if (filtersLoadingStatus === 'loading') {
         return <Spinner />;
     } else if(filtersLoadingStatus === 'error') {
-        return <h5 style={style}>Downloading Error</h5>
+        return <h5 style={style}>{t('not_found')}</h5>
     }
 
     const renderFilters = arr => {
         if(arr.length === 0){
-            return <h5 style={style}>Filters not found</h5>
+            return <h5 style={style}>{t('downloading_error')}</h5>
         }
         return arr.map(({name, className, id}) => {
             const btnClass = classNames('button', className, {
@@ -41,7 +42,7 @@ const TodosFilters = () => {                                //нужно про�
                         onClick={() => {
                             dispatch(setCurrentPage(1));
                             dispatch(filtersChanged(id));
-                        }}>{name}</button>
+                        }}>{t(`filter_${name}`)}</button>
         })
     }
 
@@ -50,7 +51,7 @@ const TodosFilters = () => {                                //нужно про�
     return (
         <div className="container">
             <div className="container__inner">
-                <p>Filter your todos</p>
+                <p>{t('filters_title')}</p>
                 <div className="button_group">
                     {element}
                 </div>

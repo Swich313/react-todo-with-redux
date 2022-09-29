@@ -14,6 +14,7 @@ import TodosListItem from "../todosListItem/TodosListItem";
 import Spinner from '../spinner/Spinner';
 import './todoList.scss'
 import 'dotenv/config';
+import {useTranslation} from "react-i18next";
 
 
 const TodosList = () => {                       //нужно прокинуть props.updateData
@@ -34,6 +35,7 @@ const TodosList = () => {                       //нужно прокинуть 
     const {activeFilter} = useSelector(state => state.filters)
     const dispatch = useDispatch();
     const {request} = useHttp();
+    const {t} = useTranslation();
     const style = {textAlign: 'center', marginTop: '5px'};
     const filteredTodosQuantity = filteredTodos.length;
     const pagesQuantity = Math.ceil(filteredTodosQuantity / perPage);
@@ -48,6 +50,7 @@ const TodosList = () => {                       //нужно прокинуть 
         if ((currentPage === pagesQuantity || ((filteredTodosQuantity/perPage)) - pagesQuantity) === 0 && filteredTodosQuantity !== 0) {
             dispatch(setCurrentPage(Math.ceil(filteredTodosQuantity / perPage)))
         }
+        // eslint-disable-next-line
     }, [filteredTodosQuantity]);
 
      useEffect(() => {
@@ -93,14 +96,14 @@ const TodosList = () => {                       //нужно прокинуть 
     if (todosLoadingStatus === "loading") {
         return <Spinner/>;
     } else if (todosLoadingStatus === "error") {
-        return <h5 style={style}>Downloading Error</h5>
+        return <h5 style={style}>{t('downloading_error')}</h5>
     }
 
     const renderTodosList = (arr, filter, currentPage, perPage) => {
         if (arr.length === 0 && filter !== 'done') {
-            return <h5 style={style}>There is no todo yet!</h5>
+            return <h5 style={style}>{t('no_todo_yet')}</h5>
         } else if (arr.length === 0){
-            return <h5 style={style}>There is no completed todo yet!</h5>
+            return <h5 style={style}>{t('no_completed_todo_yet')}</h5>
         }
         let start = (currentPage - 1) * perPage;
         let stop = currentPage * perPage;

@@ -1,3 +1,30 @@
 {
-  "welcome_to_react": "Bienvenue a React et react-i18next"
+  "app_title": "Qu'y a-t-il à faire",
+  "addForm_title": "Qu'y a-t-il à faire:",
+  "addForm_title_placeholder": "Sujette",
+  "addForm_title_invalid": "Remplissez d'abord le titre de la tâche !",
+  "addForm_description": "Description de todo:",
+  "addForm_description_placeholder": "Quelques détails",
+  "addForm_description_invalid": "Remplissez d'abord la description de la tâche !",
+  "addFrom_type": "Quel genre de choses à faire:",
+  "addForm_type_default": "Choisissez l'option...",
+  "addForm_button": "Ajouter une tâche",
+  "filters_title": "Filtrez vos tâches",
+  "filter_all": "toute",
+  "filter_home": "domicile",
+  "filter_work": "travailler",
+  "filter_hobby": "loisir",
+  "filter_other": "autre",
+  "filter_done": "finie",
+  "deadline_text": "Compléter jusqu'à:",
+  "deadline_outdated": "(dépassée)",
+  "deadline_today": "(c'est aujourd'hui)",
+  "tooltip": "Complétez cette tâche en premier",
+  "language_code": "fr",
+  "downloading_error": "Erreur de téléchargement",
+  "not_found": "Filtres introuvables",
+  "no_todo_yet": "Il n'y a pas encore de choses à faire!",
+  "no_completed_todo_yet": "Il n'y a pas encore de tâche terminée!",
+  "loading_message": "Chargement..."
+
 }

@@ -1,22 +1,23 @@
 import Calendar from "react-calendar";
 import {useState} from "react";
 import {setTodoDeadline} from "../todosList/todosSlice";
+import {useDispatch} from "react-redux";
+import {useTranslation} from "react-i18next";
 
 import 'react-calendar/dist/Calendar.css';
-import {useDispatch} from "react-redux";
 
 const TodoCalendar = () => {
 
     const [date, setDate] = useState(new Date());
     const dispatch= useDispatch();
+    const {t} = useTranslation();
 
-
+    const codeLn = 'en';
+    let cookieValue = document.cookie.split('=');
 
     const onChange = date => {
-
         dispatch(setTodoDeadline(handleDate(date)));
         setDate(date);
-
     };
 
     return (
@@ -24,7 +25,7 @@ const TodoCalendar = () => {
             onChange={onChange}
             value={date}
             showWeekNumbers
-            locale='en-EN'/>
+            locale={cookieValue[1]} />
     )
 }
 

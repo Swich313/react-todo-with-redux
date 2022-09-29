@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useHttp} from "../../hooks/http.hook";
 import {todoCreated, setTodoDeadline} from "../todosList/todosSlice";
+import {useTranslation} from "react-i18next";
 import 'dotenv/config';
 
 import "./todosAddForm.scss"
@@ -11,6 +12,7 @@ const TodosAddForm = () => {
     const [todoDescr, setTodoDescr] = useState('');
     const [todoType, setTodoType] = useState('');
 
+    const {t} = useTranslation();
     const {filters, filtersLoadingStatus} = useSelector(state => state.filters);
     const {todoDeadline} = useSelector(state => state.todos);
     const dispatch = useDispatch();
@@ -44,7 +46,7 @@ const TodosAddForm = () => {
 
     const renderFilters = (filters, status) => {
         if (status === 'loading'){
-            return <option>Loading...</option>
+            return <option>{t('loading_message')}</option>
         } else if (status === 'error'){
             return <option>Downloading Error</option>
         }
@@ -52,7 +54,7 @@ const TodosAddForm = () => {
             return filters.map(({id, name}) => {
                 if (name === 'all' || name === 'done') return;
                 return (
-                    <option key={id} value={id}>{name}</option>
+                    <option key={id} value={id}>{t(`filter_${name}`)}</option>
                 )
             })
         }
@@ -61,44 +63,48 @@ const TodosAddForm = () => {
     return (
         <form onSubmit={onSubmitHandler}>
             <div>
-                <label htmlFor="name" >What is to be done:</label>
+                <label htmlFor="name" >{t('addForm_title')}</label>
                 <input 
                     required
                     type="text" 
                     name="name" 
                     id="name"
-                    placeholder="Topic"
+                    onInvalid={e => e.target.setCustomValidity(t('addForm_title_invalid'))}
+                    onInput={e => e.target.setCustomValidity('')}
+                    placeholder={t('addForm_title_placeholder')}
                     value={todoTitle}
                 onChange={e => setTodoTitle(e.target.value)}/>
             </div>
 
             <div>
-                <label htmlFor="text">Description of todo:</label>
+                <label htmlFor="text">{t('addForm_description')}</label>
                 <textarea
                     required
                     name="text" 
                     id="text"
-                    placeholder="Some details"
+                    onInvalid={e => e.target.setCustomValidity(t('addForm_description_invalid'))}
+                    onInput={e => e.target.setCustomValidity('')}
+                    placeholder={t('addForm_description_placeholder')}
                     style={{"height": '130px'}}
                     value={todoDescr}
                     onChange={e => setTodoDescr(e.target.value)}/>
             </div>
 
             <div>
-                <label htmlFor="element">What kind of todo:</label>
+                <label htmlFor="element">{t('addFrom_type')}</label>
                 <select 
                     required
                     id="type"
                     name="type"
                     value={todoType}
                     onChange={e => setTodoType(e.target.value)}>
-                    <option >Choose option...</option>
+                    <option >{t('addForm_type_default')}</option>
                     {renderFilters(filters, filtersLoadingStatus)}
 
                 </select>
             </div>
 
-            <button type="submit" className='btn'>Add todo</button>
+            <button type="submit" className='btn'>{t('addForm_button')}</button>
         </form>
     )
 }
